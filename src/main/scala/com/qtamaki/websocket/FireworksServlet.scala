@@ -33,6 +33,7 @@ class FireworksServlet extends WebSocketServlet {
     var playerName: Option[String] = None;
 
     private def sendMessage(clients: HashSet[FireworksWebSocket], data: String) {
+      logger.info(">> sendMessage: " + data)
       clients.foreach { c =>
         try { c.connection.sendMessage(data) } catch { case e: Exception => logger.error(e.toString); }
       }
@@ -43,7 +44,6 @@ class FireworksServlet extends WebSocketServlet {
     }
     private def reset {
       started = false
-      clients.map(_.playerName = None)
     }
     override def onMessage(data: String) = {
       logger.info(">> onMessage: " + data)
@@ -53,11 +53,11 @@ class FireworksServlet extends WebSocketServlet {
             sendMessage(clients, data)
             this.playerName = Some(playerName)
             // clientが2名以上で、すべて名前が登録されていれば、プレイ開始とする
+            logger.info("started " + started.toString + " clients: " + clients.map(_.playerName))
             if (!started && clients.size > 1 && clients.map(_.playerName).forall(_.isDefined)) {
               start
               // 開始メッセージを投げる
               sendMessage(clients, (("START" :: clients.map(_.playerName.get).toList) ++ (random.nextInt().toString :: Nil)).mkString(","))
-              scores.clear()
             }
           }
           case "FW" :: name :: frame :: x :: y :: _ => {

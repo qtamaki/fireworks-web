@@ -18,10 +18,10 @@
         this.baseY = y;
         for(var i = dotCount; i--; ) {
             var d = new Dot;
-            //d.a = (i % 60 + i / 60) * Math.cos((i % 60) / 60 * R2);// * Math.random();
-            //d.b = (i % 60 + i / 60) * Math.sin((i % 60) / 60 * R2);// * Math.random();
-            d.a = initPow * Math.cos(i) * Math.random();
-            d.b = initPow * Math.sin(i) * Math.random();
+            d.a = (i % 60 + i / 60) * Math.cos((i % 60) / 60 * R2);// * Math.random();
+            d.b = (i % 60 + i / 60) * Math.sin((i % 60) / 60 * R2);// * Math.random();
+            //d.a = initPow * Math.cos(i) * Math.random();
+            //d.b = initPow * Math.sin(i) * Math.random();
             d.x = x + d.a;
             d.y = y + d.b;
             this.list[i] = d;
@@ -79,7 +79,7 @@
     function run () {
         c2d = dutil.context2d;
         c2d.globalCompositeOperation = "source-over";
-        c2d.fillStyle = "rgba(8,8,12,0.65)";
+        c2d.fillStyle = "rgb(8,8,12)";
         c2d.fillRect(0, 0, WIDTH, HEIGHT);
         c2d.globalCompositeOperation = "lighter";
         for(var i = Fireworks.length; i--;){

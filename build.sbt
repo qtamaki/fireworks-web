@@ -1,6 +1,6 @@
 seq(webSettings :_*)
 
-name := "Websocket Draggable"
+name := "Fireworks web"
 
 version := "1.0.0"
 
